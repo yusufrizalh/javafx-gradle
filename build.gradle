@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+    id 'org.beryx.jlink' version '2.16.2'
+}
+
+jlink {
+    launcher {
+        name = 'JavaMenuGradle'
+    }
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'id.inixindosurabaya.Starter'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+group 'id.inixindosurabaya'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+javafx {
+    version = "12.0.2"
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    
+    // menambah jfoenix
+    compile 'com.jfoenix:jfoenix:9.0.8'
+}
+
+mainClassName = 'id.inixindosurabaya.MainApp'
